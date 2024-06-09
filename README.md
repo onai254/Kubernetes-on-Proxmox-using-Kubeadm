@@ -10,8 +10,9 @@ This repository contains resources and instructions for bootstrapping a Kubernet
 
 ## Installation
 
-### Step 1: Prepare the Proxmox VM
+### Step 1: Prepare the  VM
 Ensure your VM is updated and has all the necessary dependencies:
+You can clone this repository and run the scripts to 
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install -y apt-transport-https ca-certificates curl
