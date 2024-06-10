@@ -20,6 +20,3 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 
 # Change ownership of $HOME/.kube/config to current user
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
-# Verify that kubectl is working correctly
-kubectl get nodes
