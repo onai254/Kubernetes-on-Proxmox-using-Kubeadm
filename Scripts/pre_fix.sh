@@ -78,4 +78,13 @@ sudo chmod 600 /etc/netplan/01-netcfg.yaml
 echo "Applying netplan changes..."
 sudo netplan apply
 
+# Enable UFW
+sudo ufw enable
+
+# Allow traffic on port 8080
+sudo ufw allow 8080/tcp
+
+# Reload UFW rules
+sudo ufw reload
+
 echo "VM is ready for Kubernetes installation."
