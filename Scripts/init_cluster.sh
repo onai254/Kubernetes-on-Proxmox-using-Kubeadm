@@ -12,11 +12,11 @@ join_cmd=$(kubeadm token create --print-join-command)
 # Print the join command
 echo "Join command for future nodes: $join_cmd"
 
-# Change the location of the kubectl package to /usr/local/bin/kubectl
-sudo mv /usr/bin/kubectl /usr/local/bin/kubectl
+# Create /.kube directory
+mkdir -p $HOME/.kube
 
-# Update the PATH environment variable to include /usr/local/bin
-export PATH=$PATH:/usr/local/bin
+# Change the location of Kubeconfig file
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 
 # Change ownership of $HOME/.kube/config to current user
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
