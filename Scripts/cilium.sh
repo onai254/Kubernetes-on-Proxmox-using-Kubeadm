@@ -1,16 +1,23 @@
 #!/bin/bash
 
-# Download cilium-cli (adjust URL based on version)
-curl -L --remote-name https://github.com/cilium/cilium/releases/download/v1.15.5/cilium-linux-amd64.tar.gz
+# Get the latest Cilium CLI version
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 
-# Extract the archive
-tar xvf cilium-linux-amd64.tar.gz
+# Determine the architecture (amd64 or arm64)
+CLI_ARCH=amd64
+if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
 
-# Move cilium-cli to a directory in your PATH (e.g., /usr/local/bin)
-mv cilium-linux-amd64/cilium /usr/local/bin/cilium
+# Download and verify the Cilium CLI binary
+curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
 
-# Install Cilium using cilium-cli (adjust options as needed)
+# Extract the Cilium CLI binary to /usr/local/bin
+sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
+
+# Remove the downloaded files
+rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+
+# Install Cilium
 cilium install
 
-# Start Cilium agent
-cilium agent
+echo "Cilium installation complete!"
