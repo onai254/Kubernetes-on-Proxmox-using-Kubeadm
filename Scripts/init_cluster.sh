@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get the IP address of the master node
-MASTER_IP=$(ip addr show ens33 | awk '$1 == "inet" {print $2}' | cut -d/ -f1)
+MASTER_IP=$(ip addr show ens18 | awk '$1 == "inet" {print $2}' | cut -d/ -f1)
 
 # Initialize the Kubernetes cluster using kubeadm
 sudo kubeadm init --pod-network-cidr 10.244.0.0/16 --apiserver-advertise-address $MASTER_IP
