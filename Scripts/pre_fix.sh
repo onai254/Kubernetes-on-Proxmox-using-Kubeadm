@@ -32,16 +32,24 @@ echo "Loading br_netfilter module..."
 sudo modprobe br_netfilter
 
 # Ensure br_netfilter module is loaded on boot
-echo "br_netfilter" | sudo tee -a /etc/modules-load.d/br_netfilter.conf
+echo "br_netfilter" | sudo tee -a /etc/modules-load.d/k8s.conf
+
+# Load overlay module
+echo "Loading overlay module..."
+sudo modprobe overlay
+
+# Ensure overlay module is loaded on boot 
+echo "overlay" | sudo tee -a /etc/modules-load.d/k8s.conf
 
 # Set the necessary kernel parameters
 echo "Setting kernel parameters..."
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
 EOF
 
-# Apply sysctl changes
+# Apply sysctl changes and persist across reboots
 echo "Applying sysctl changes..."
 sudo sysctl --system
 
@@ -65,7 +73,6 @@ EOF
 
 # Change permisiion of 01-netcfg.yaml
 sudo chmod 600 /etc/netplan/01-netcfg.yaml
-
 
 # Apply netplan changes
 echo "Applying netplan changes..."

@@ -16,6 +16,9 @@ else
   echo "Containerd is not running."
 fi
 
+# Create the containerd directory
+sudo mkdir -p /etc/containerd
+
 # Generate default containerd configuration file
 echo "Generating default containerd config..."
 containerd config default | sudo tee /etc/containerd/config.toml
