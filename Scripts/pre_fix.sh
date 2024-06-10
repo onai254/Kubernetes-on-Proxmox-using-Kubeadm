@@ -63,6 +63,10 @@ network:
         addresses: [8.8.8.8, 8.8.4.4]
 EOF
 
+# Change permisiion of 01-netcfg.yaml
+sudo chmod 600 /etc/netplan/01-netcfg.yaml
+
+
 # Apply netplan changes
 echo "Applying netplan changes..."
 sudo netplan apply
