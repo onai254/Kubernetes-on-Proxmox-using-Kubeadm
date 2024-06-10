@@ -8,23 +8,21 @@ sudo apt update
 echo "Installing containerd..."
 sudo apt install -y containerd
 
-# Check the status of containerd
-echo "Checking the status of containerd..."
-systemctl status containerd
+# Check if containerd is running
+echo "Checking if containerd is running..."
+if systemctl is-active --quiet containerd; then
+  echo "Containerd is running."
+else
+  echo "Containerd is not running."
+fi
 
 # Generate default containerd configuration file
 echo "Generating default containerd config..."
 containerd config default | sudo tee /etc/containerd/config.toml
 
-# Create the containerd directory if it doesn't exist
-if [ ! -d "/etc/containerd" ]; then
-    echo "Creating /etc/containerd directory..."
-    sudo mkdir /etc/containerd
-fi
-
 # Edit the containerd configuration file
-echo "Please edit the containerd configuration file as needed."
-sudo nano /etc/containerd/config.toml
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
+
 
 # Reload the systemd daemon
 echo "Reloading the systemd daemon..."

@@ -25,7 +25,7 @@ sudo swapoff -a
 
 # Edit fstab to prevent swap from turning on after reboot
 echo "Disabling swap on boot in /etc/fstab..."
-sudo sed -i '/ swap / s/^/#/' /etc/fstab
+sudo sed -i '/swap/s/^/#/' /etc/fstab
 
 # Load br_netfilter module
 echo "Loading br_netfilter module..."
