@@ -10,3 +10,12 @@ rm argocd-linux-amd64
 
 # Verify the installation
 argocd version
+
+# Create the argocd namespace
+kubectl create namespace argocd
+
+# Set the current context's namespace to argocd
+kubectl config set-context --current --namespace=argocd
+
+# Apply the Argo CD installation manifests
+kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
