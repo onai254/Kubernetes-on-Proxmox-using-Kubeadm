@@ -12,3 +12,6 @@ sudo apt-get install -y kubelet kubeadm kubectl
 
 # Hold the packages to prevent updates
 sudo apt-mark hold kubelet kubeadm kubectl
+
+# Start kubelet
+sudo systemctl start kubelet
