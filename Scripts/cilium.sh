@@ -21,3 +21,6 @@ rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 cilium install
 
 echo "Cilium installation complete!"
+
+# Enable Huble
+cilium hubble enable
