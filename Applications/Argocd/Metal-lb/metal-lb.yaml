@@ -1,21 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metallb
-  namespace: argocd
+  name: metal-lb
 spec:
-  project: default
-  source:
-    repoURL: 'https://github.com/metallb/metallb.git'
-    path: 'charts/metallb'
-    targetRevision: HEAD
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
+    name: ''
+    namespace: metallb
     server: 'https://kubernetes.default.svc'
-    namespace: metallb-system
+  source:
+    path: ''
+    repoURL: 'https://metallb.github.io/metallb'
+    targetRevision: 0.14.5
+    chart: metallb
+  sources: []
+  project: default
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    automated: null
+    syncOptions:
+      - CreateNamespace=true
+      - Validate=false
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
+      - PruneLast=true
+      - RespectIgnoreDifferences=true
